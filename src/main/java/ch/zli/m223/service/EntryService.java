@@ -23,4 +23,9 @@ public class EntryService {
     public List<Entry> findAll() {
         return entryRepository.listAll();
     }
+
+    @Transactional
+    public boolean deleteEntry(Long id) {
+        return entryRepository.deleteById(id);
+    }
 }
