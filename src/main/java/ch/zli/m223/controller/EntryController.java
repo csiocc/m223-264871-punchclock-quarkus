@@ -6,6 +6,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -35,7 +37,16 @@ public class EntryController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Operation(summary = "Creates a new entry.", description = "Creates a new entry and returns the newly added entry.")
     public Entry create(Entry entry) {
-       return entryService.createEntry(entry);
+        return entryService.createEntry(entry);
+    }
+    
+    @Path("/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public void delete(Long id) {
+        if (!entryService.deleteEntry(id)) {
+            throw new NotFoundException();
+        }
     }
 
 }
